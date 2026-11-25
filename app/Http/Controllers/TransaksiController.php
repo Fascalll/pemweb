@@ -11,7 +11,7 @@ class TransaksiController extends Controller
 {
     public function index(): View
     {
-        $hasilAgregasi = DB::table('transaksis')->whereBetween('tanggal', [now()->subDays(30), now()])
+        $hasilAgregasi = DB::table('transaksis')->whereYear('tanggal', 2026)
             ->selectRaw('MONTH(tanggal) as bulan, SUM(total) as total_transaksi')
             ->groupByRaw('MONTH(tanggal)')->pluck('total_transaksi', 'bulan');
 
@@ -25,7 +25,7 @@ class TransaksiController extends Controller
             ];
         });
 
-        $transaksi = DB::table('transaksis')->whereBetween('tanggal', [now()->subDays(30), now()])
+        $transaksi = DB::table('transaksis')->whereYear('tanggal', 2026)
             ->orderBy('tanggal', 'desc')->orderBy('id', 'desc')->get();
 
         return view('transaksi.index', compact('transaksi', 'hasilAgregasi', 'namaBulan', 'agregasiBulanan'));

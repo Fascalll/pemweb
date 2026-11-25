@@ -36,6 +36,20 @@ class ExampleTest extends TestCase
         ]);
     }
 
+    public function test_transaction_from_earlier_in_2026_is_visible_on_dashboard(): void
+    {
+        $this->post('/transaksi', [
+            'tanggal_transaksi' => '2026-10-15',
+            'jumlah_penjualan' => 10,
+        ]);
+
+        $response = $this->get('/');
+
+        $response->assertOk();
+        $response->assertSee('15-10-2026');
+        $response->assertSee('10');
+    }
+
     public function test_empty_payload_returns_validation_errors_without_creating_transaction(): void
     {
         $response = $this->from('/')->post('/transaksi', []);

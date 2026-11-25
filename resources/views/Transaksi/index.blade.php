@@ -179,12 +179,12 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>
-                                {{ $item->tanggal_transaksi
+                                {{ \Carbon\Carbon::parse($item->tanggal)
                                     ->format('d-m-Y') }}
                             </td>
                             <td class="text-end">
                                 {{ number_format(
-                                    $item->jumlah_penjualan,
+                                    $item->jumlah,
                                     0, ',', '.'
                                 ) }}
                             </td>
